@@ -44,7 +44,7 @@ const categories = [
   },
 ];
 
-const GourmetServices = () => {
+const GourmetServices = ({ onExploreCategory }) => {
   return (
     <section className="gourmet-services" id="gourmet-food-services">
       <div className="services-container">
@@ -67,7 +67,10 @@ const GourmetServices = () => {
                   className="category-image"
                 />
                 <div className="category-overlay">
-                  <button className="btn-primary">
+                  <button
+                    className="btn-primary"
+                    onClick={() => onExploreCategory(category.id)}
+                  >
                     Explore {category.title}
                   </button>
                 </div>

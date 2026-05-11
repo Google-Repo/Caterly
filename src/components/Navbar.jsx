@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/logo-02.png";
 import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ onLogout }) => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -51,7 +51,9 @@ const Navbar = () => {
         </ul>
 
         <div className="navbar-actions">
-          <button className="btn-primary">Get Started</button>
+          <button className="btn-primary" onClick={onLogout}>
+            Logout
+          </button>
         </div>
       </div>
     </nav>
