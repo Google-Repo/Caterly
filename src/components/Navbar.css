@@ -1,3 +1,10 @@
+/* Ensure smooth scrolling and prevent fixed navbar from covering section titles */
+html {
+  scroll-behavior: smooth;
+  /* Adjust this value to match your navbar's height + any desired top margin */
+  scroll-padding-top: 120px;
+}
+
 .navbar {
   width: 90%;
   margin: 1.5rem auto 0 auto;
