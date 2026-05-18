@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcat-users>
+  <!-- Minimal user used by tomcat7-maven-plugin for manager access -->
+  <role rolename="manager-gui"/>
+  <role rolename="manager-text"/>
+  <user username="tomcat" password="tomcat" roles="manager-gui,manager-text"/>
+</tomcat-users>
+

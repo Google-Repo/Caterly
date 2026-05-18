@@ -1,13 +1,77 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
 import "./Auth.css";
 
 const Auth = ({ onLogin, userRole }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Pass the selected event type back to the parent component
+
+    const formData = new FormData(e.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+    const customerName = formData.get("customerName");
+    const mobileNumber = formData.get("mobileNumber");
+
+    // Keep role from parent: customer / manager
+    const role = userRole;
+
+    if (!isLogin) {
+      if (password !== confirmPassword) {
+        alert("Password and confirm password do not match");
+        return;
+      }
+
+      // If customer, send extra fields
+      const payload = {
+        role,
+        email,
+        password,
+        customerName: customerName || "",
+        mobileNumber: mobileNumber || "",
+      };
+
+      const res = await fetch("http://localhost:8080/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        // B: signup success ke baad login page par wapas aao
+        alert("Account created successfully. Please login.");
+        setIsLogin(true);
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || "Signup failed");
+      return;
+    } else {
+      const payload = { email, password };
+      const res = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        let data = {};
+        try {
+          data = await res.json();
+        } catch (e) {
+          // ignore
+        }
+        alert(data.error || `Login failed (HTTP ${res.status})`);
+        return;
+      }
+    }
+
+    // Keep existing app behavior (eventType uses selectedEvent)
+    // Login/Signup backend only cares about auth fields; do not require event selection
     onLogin(selectedEvent);
   };
 
@@ -18,9 +82,19 @@ const Auth = ({ onLogin, userRole }) => {
         <form onSubmit={handleSubmit}>
           {!isLogin && userRole === "customer" && (
             <>
-              <input type="text" placeholder="Customer Name" required />
-              <input type="tel" placeholder="Mobile Number" required />
-              <input type="text" placeholder="Event Name" required />
+              <input
+                name="customerName"
+                type="text"
+                placeholder="Customer Name"
+                required
+              />
+              <input
+                name="mobileNumber"
+                type="tel"
+                placeholder="Mobile Number"
+                required
+              />
+
               <select
                 required
                 value={selectedEvent}
@@ -35,11 +109,22 @@ const Auth = ({ onLogin, userRole }) => {
               </select>
             </>
           )}
-          <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
+          <input name="email" type="email" placeholder="Email" required />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
           {!isLogin && (
-            <input type="password" placeholder="Confirm Password" required />
+            <input
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+              required
+            />
           )}
+
           <button type="submit" className="btn-primary">
             {isLogin ? "Login" : "Create Account"}
           </button>
