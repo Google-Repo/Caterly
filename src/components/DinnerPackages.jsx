@@ -1,4 +1,3 @@
-import React from "react";
 import "./BreakfastPackages.css";
 
 const dinnerPackages = [
@@ -31,7 +30,7 @@ const dinnerPackages = [
   },
 ];
 
-const DinnerPackages = ({ onBack }) => {
+const DinnerPackages = ({ onBack, onSelectPackage }) => {
   return (
     <section className="breakfast-packages">
       <div className="packages-container">
@@ -57,7 +56,16 @@ const DinnerPackages = ({ onBack }) => {
                 <h3>{pkg.name}</h3>
                 <p className="package-price">{pkg.price}</p>
                 <p className="package-description">{pkg.description}</p>
-                <button className="btn-primary package-button">
+                <button
+                  className="btn-primary package-button"
+                  onClick={() =>
+                    onSelectPackage?.({
+                      category: "dinner",
+                      packageId: pkg.id,
+                      packageName: pkg.name,
+                    })
+                  }
+                >
                   Select Package
                 </button>
               </div>

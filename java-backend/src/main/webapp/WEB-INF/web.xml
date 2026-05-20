@@ -36,6 +36,26 @@
     <url-pattern>/api/login</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ManagerSignupServlet</servlet-name>
+    <servlet-class>com.caterly.api.ManagerSignupServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ManagerSignupServlet</servlet-name>
+    <url-pattern>/api/manager/signup</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ManagerLoginServlet</servlet-name>
+    <servlet-class>com.caterly.api.ManagerLoginServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ManagerLoginServlet</servlet-name>
+    <url-pattern>/api/manager/login</url-pattern>
+  </servlet-mapping>
+
   <filter>
     <filter-name>CorsFilter</filter-name>
     <filter-class>com.caterly.api.CorsFilter</filter-class>
@@ -56,6 +76,21 @@
   </servlet-mapping>
 
 </web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

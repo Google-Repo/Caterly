@@ -1,30 +1,48 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Splash from "./components/Splash";
-import Auth from "./components/Auth"; // Import the Auth component
-import GourmetServices from "./components/GourmetServices"; // Import GourmetServices
-import BreakfastPackages from "./components/BreakfastPackages"; // Import BreakfastPackages
-import LunchPackages from "./components/LunchPackages"; // Import LunchPackages
-import HiTeaPackages from "./components/HiTeaPackages"; // Import HiTeaPackages
-import DinnerPackages from "./components/DinnerPackages"; // Import DinnerPackages
-import HospitalityEvents from "./components/HospitalityEvents"; // Import HospitalityEvents
+import Auth from "./components/Auth";
+import GourmetServices from "./components/GourmetServices";
+import BreakfastPackages from "./components/BreakfastPackages";
+import LunchPackages from "./components/LunchPackages";
+import HiTeaPackages from "./components/HiTeaPackages";
+import DinnerPackages from "./components/DinnerPackages";
+import HospitalityEvents from "./components/HospitalityEvents";
+import SideGourmetService from "./components/SideGourmetService";
+
 import "./App.css";
-import "./components/Auth.css"; // Reuse Auth styles for role selection
+import "./components/Auth.css";
+import ManagerDashboard from "./components/ManagerDashboard";
 
 const App = () => {
   const [isStarted, setIsStarted] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [eventType, setEventType] = useState("default");
-  const [activeGourmetCategory, setActiveGourmetCategory] = useState(null); // State to manage sub-views in Gourmet Services
+  const [currentUserEmail, setCurrentUserEmail] = useState("");
+
+  const [activeGourmetCategory, setActiveGourmetCategory] = useState(null);
+  const [sideSelection, setSideSelection] = useState({
+    visible: false,
+    notification: "",
+    selectedCategory: "",
+    selectedPackage: "",
+  });
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setIsStarted(false);
     setUserRole(null);
     setEventType("default");
-    setActiveGourmetCategory(null); // Reset active category on logout
+    setActiveGourmetCategory(null);
+    setSideSelection({
+      visible: false,
+      notification: "",
+      selectedCategory: "",
+      selectedPackage: "",
+    });
   };
 
   if (!isStarted) {
@@ -80,31 +98,99 @@ const App = () => {
     setActiveGourmetCategory(null);
   };
 
+  const handleSelectPackageNotice = (payload) => {
+    // Scroll to Gourmet Services area so popup seems to “come from” that section
+    const target = document.getElementById("gourmet-food-services");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    setSideSelection({
+      visible: true,
+      notification: `Notification: ${payload.packageName} selected. Manager will email you shortly.`,
+      selectedCategory: payload.category,
+      selectedPackage: payload.packageName,
+    });
+
+    // Ensure scroll after popup mount
+    setTimeout(() => {
+      const target2 = document.getElementById("gourmet-food-services");
+      target2?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  };
+
   const renderGourmetContent = () => {
     switch (activeGourmetCategory) {
       case "breakfast":
-        return <BreakfastPackages onBack={handleBackToGourmetServices} />;
+        return (
+          <BreakfastPackages
+            onBack={handleBackToGourmetServices}
+            onSelectPackage={handleSelectPackageNotice}
+          />
+        );
       case "lunch":
-        return <LunchPackages onBack={handleBackToGourmetServices} />;
+        return (
+          <LunchPackages
+            onBack={handleBackToGourmetServices}
+            onSelectPackage={handleSelectPackageNotice}
+          />
+        );
       case "hi-tea":
-        return <HiTeaPackages onBack={handleBackToGourmetServices} />;
+        return (
+          <HiTeaPackages
+            onBack={handleBackToGourmetServices}
+            onSelectPackage={handleSelectPackageNotice}
+          />
+        );
       case "dinner":
-        return <DinnerPackages onBack={handleBackToGourmetServices} />;
+        return (
+          <DinnerPackages
+            onBack={handleBackToGourmetServices}
+            onSelectPackage={handleSelectPackageNotice}
+          />
+        );
       default:
         return <GourmetServices onExploreCategory={handleExploreCategory} />;
     }
   };
 
+  if (userRole === "manager") {
+    return (
+      <ManagerDashboard
+        managerName={undefined}
+        onLogout={handleLogout}
+        latestRequest={{
+          category: sideSelection.selectedCategory,
+          packageName: sideSelection.selectedPackage,
+        }}
+      />
+    );
+  }
+
   return (
     <div className="app-container animate-fade-in" data-theme={eventType}>
       <Navbar onLogout={handleLogout} />
       <Hero />
-      {/* Add the Services section with its sub-components */}
+
       <div id="services">
         {renderGourmetContent()}
         <HospitalityEvents />
       </div>
-      {/* You can add other sections here if you have them, e.g., <About />, <Menu />, <Contact /> */}
+
+      <SideGourmetService
+        visible={sideSelection.visible}
+        notification={sideSelection.notification}
+        selectedCategory={sideSelection.selectedCategory}
+        selectedPackage={sideSelection.selectedPackage}
+        onClear={() =>
+          setSideSelection({
+            visible: false,
+            notification: "",
+            selectedCategory: "",
+            selectedPackage: "",
+          })
+        }
+      />
     </div>
   );
 };

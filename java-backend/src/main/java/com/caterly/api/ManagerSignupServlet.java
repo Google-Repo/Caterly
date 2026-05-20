@@ -11,27 +11,23 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-public class SignupServlet extends AuthServletBase {
+public class ManagerSignupServlet extends AuthServletBase {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             JsonObject json = JsonParser.parseReader(req.getReader()).getAsJsonObject();
-            // customer-only signup; role must be customer
-            String role = json.get("role").getAsString();
             String email = json.get("email").getAsString();
             String password = json.get("password").getAsString();
-            String name = json.has("customerName") ? json.get("customerName").getAsString() : "";
-            String mobile = json.has("mobileNumber") ? json.get("mobileNumber").getAsString() : "";
+            String managerName = json.has("managerName") ? json.get("managerName").getAsString() : "";
 
             String hash = BCrypt.hashpw(password, BCrypt.gensalt());
 
             try (Connection conn = DBUtil.getConnection()) {
-                String sql = "INSERT INTO customer_users (email, password_hash, customer_name, mobile_number) VALUES (?, ?, ?, ?)";
+                String sql = "INSERT INTO manager_users (email, password_hash, manager_name) VALUES (?, ?, ?)";
                 try (PreparedStatement st = conn.prepareStatement(sql)) {
                     st.setString(1, email);
                     st.setString(2, hash);
-                    st.setString(3, name);
-                    st.setString(4, mobile);
+                    st.setString(3, managerName);
                     st.executeUpdate();
                 }
 

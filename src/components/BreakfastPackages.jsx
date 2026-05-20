@@ -4,12 +4,12 @@ import "./BreakfastPackages.css";
 const breakfastPackages = [
   {
     id: "continental",
-    name: "Continental Delight",
+    name: "Desi Morning",
     price: "₹500/person",
     description:
-      "A classic selection of pastries, fresh fruits, yogurt, cereals, and coffee/tea.",
+      "Desi breakfast platter with Aloo Paratha, Butter Naan, and a side of curd and pickles.",
     image:
-      "https://images.unsplash.com/photo-1525351484163-7529414344d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      "https://res.cloudinary.com/dohdiu2s6/image/upload/v1779210842/alooParatha_mymntf.jpg",
   },
   {
     id: "south-indian",
@@ -31,7 +31,7 @@ const breakfastPackages = [
   },
 ];
 
-const BreakfastPackages = ({ onBack }) => {
+const BreakfastPackages = ({ onBack, onSelectPackage }) => {
   return (
     <section className="breakfast-packages" id="breakfast-packages">
       <div className="packages-container">
@@ -48,6 +48,10 @@ const BreakfastPackages = ({ onBack }) => {
           </button>
         </div>
 
+        <div className="pure-veg-corner" aria-hidden="true">
+          Pure Veg
+        </div>
+
         <div className="packages-grid">
           {breakfastPackages.map((pkg) => (
             <div key={pkg.id} className="package-card animate-fade-in">
@@ -58,7 +62,16 @@ const BreakfastPackages = ({ onBack }) => {
                 <h3>{pkg.name}</h3>
                 <p className="package-price">{pkg.price}</p>
                 <p className="package-description">{pkg.description}</p>
-                <button className="btn-primary package-button">
+                <button
+                  className="btn-primary package-button"
+                  onClick={() =>
+                    onSelectPackage?.({
+                      category: "breakfast",
+                      packageId: pkg.id,
+                      packageName: pkg.name,
+                    })
+                  }
+                >
                   Select Package
                 </button>
               </div>

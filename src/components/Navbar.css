@@ -97,6 +97,22 @@ html {
   box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
 }
 
+/* Pure veg blinking badge near Logout */
+.navbar-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Pure Veg icon + text at top-right of navbar (near Logout) */
+
+
+
+
+
+
+
 @media (max-width: 968px) {
   .navbar-menu {
     display: none; /* Hide for mobile for now */

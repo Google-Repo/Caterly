@@ -1,12 +1,12 @@
-import React from "react";
 import "./GourmetServices.css";
+
+import { themeImages } from "./GourmetServicesThemeImages";
 
 const categories = [
   {
     id: "breakfast",
     title: "Breakfast",
-    image:
-      "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+    image: themeImages.breakfast,
     description:
       "Start your day with our artisanal breakfast selections and fresh morning delights.",
   },

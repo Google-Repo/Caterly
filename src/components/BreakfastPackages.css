@@ -1,7 +1,9 @@
 .breakfast-packages {
   padding: 100px 0;
   background-color: #f9f9f9;
+  position: relative;
 }
+
 
 .packages-container {
   max-width: 1200px;
@@ -115,3 +117,34 @@
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
 }
+
+/* Pure Veg blinking corner label */
+.pure-veg-corner {
+  position: absolute;
+  top: 90px;
+  right: 20px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(0, 122, 255, 0.35);
+  color: #0b7a2b;
+  font-weight: 800;
+  padding: 10px 14px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  animation: pureVegBlink 1.2s ease-in-out infinite;
+}
+
+@keyframes pureVegBlink {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.03);
+  }
+}
+

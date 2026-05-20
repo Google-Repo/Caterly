@@ -1,7 +1,7 @@
-# TODO - Fix tomcat7 plugin build failure
-
-- [x] Identify the exact Maven command(s) used to run backend (tomcat7:run)
-- [x] Decide workflow:
-  - [x] B) Enable Maven-run workflow by fixing `java-backend/pom.xml`
-- [x] Implement the chosen workflow changes (Path set to /java-backend)
-- [x] Verify data updates in phpMyAdmin after signup (Using caterly_db)
+- [x] Inspect repo components for SideGourmetService + package selection flow
+- [x] Make notification panel show as popup
+- [x] Auto-scroll popup to keep it visible
+- [x] Wire onSelectPackage for lunch/hi-tea/dinner as well
+- [ ] Display selected package on ManagerDashboard
+- [ ] Style/label the manager cards to show latest request(s)
+- [ ] Build and quick manual verification
