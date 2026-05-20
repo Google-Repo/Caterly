@@ -89,18 +89,15 @@ const Auth = ({ onLogin, userRole }) => {
         body: JSON.stringify(payload),
       });
 
+      const data = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        let data = {};
-        try {
-          data = await res.json();
-        } catch {
-          // ignore
-        }
-
-
         alert(data.error || `Login failed (HTTP ${res.status})`);
         return;
       }
+
+      onLogin(selectedEvent, data);
+      return;
     }
 
     if (isManager) {
@@ -111,22 +108,16 @@ const Auth = ({ onLogin, userRole }) => {
         body: JSON.stringify(payload),
       });
 
+      const data = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        let data = {};
-        try {
-          data = await res.json();
-        } catch {
-          // ignore
-        }
-
         alert(data.error || `Login failed (HTTP ${res.status})`);
-
         return;
       }
-    }
 
-    // Existing app behavior
-    onLogin(selectedEvent);
+      onLogin(selectedEvent, data);
+      return;
+    }
   };
 
   return (

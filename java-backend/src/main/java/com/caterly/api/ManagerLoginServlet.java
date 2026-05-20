@@ -21,7 +21,7 @@ public class ManagerLoginServlet extends AuthServletBase {
             String password = json.get("password").getAsString();
 
             try (Connection conn = DBUtil.getConnection()) {
-                String sql = "SELECT id, password_hash, manager_name FROM manager_users WHERE email = ?";
+                String sql = "SELECT id, email, password_hash, manager_name FROM manager_users WHERE email = ?";
                 try (PreparedStatement st = conn.prepareStatement(sql)) {
                     st.setString(1, email);
                     try (ResultSet rs = st.executeQuery()) {
@@ -32,7 +32,8 @@ public class ManagerLoginServlet extends AuthServletBase {
                                 responseJson.addProperty("message", "Login successful");
                                 responseJson.addProperty("userId", rs.getLong("id"));
                                 responseJson.addProperty("role", "manager");
-                                responseJson.addProperty("managerName", rs.getString("manager_name"));
+                                responseJson.addProperty("email", rs.getString("email"));
+                                responseJson.addProperty("manager_name", rs.getString("manager_name"));
                                 writeJson(resp, HttpServletResponse.SC_OK, responseJson.toString());
                                 return;
                             }

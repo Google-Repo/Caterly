@@ -14,7 +14,7 @@ const eventCategories = [
     id: "weddings",
     title: "Weddings",
     image:
-      "https://images.unsplash.com/photo-1519225495810-7517c31a2ed7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      "https://res.cloudinary.com/dohdiu2s6/image/upload/v1779307345/weddings_jo2baf.jpg",
     description:
       "Creating magical moments with exquisite menus and seamless event management for your big day.",
   },

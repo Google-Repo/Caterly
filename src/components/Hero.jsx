@@ -13,10 +13,7 @@ const Hero = () => {
             Experience the finest culinary delights crafted with passion and fresh ingredients. 
             We make your weddings, corporate events, and parties unforgettable.
           </p>
-          <div className="hero-buttons">
-            <button className="btn-primary btn-large">Get Started</button>
-            <button className="btn-secondary btn-large">Get a Quote</button>
-          </div>
+          
           
           <div className="hero-stats">
             <div className="stat-item">

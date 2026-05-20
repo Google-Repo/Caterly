@@ -75,7 +75,54 @@
     <url-pattern>/*</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>DashboardMetricsServlet</servlet-name>
+    <servlet-class>com.caterly.api.DashboardMetricsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DashboardMetricsServlet</servlet-name>
+    <url-pattern>/api/dashboard/metrics</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PackageSelectionServlet</servlet-name>
+    <servlet-class>com.caterly.api.PackageSelectionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PackageSelectionServlet</servlet-name>
+    <url-pattern>/api/package-selection</url-pattern>
+  </servlet-mapping>
+
 </web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
